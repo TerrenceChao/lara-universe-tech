@@ -106,9 +106,9 @@ class GameService
     {
         $gameId = $lottery->getGameId();
         if (empty($this->mapping[$gameId])) {
-          $lotteryVendorMapping = $this->gameVendorMappingRepo->getListByGameId($gameId);
-          $mappingList = $this->transformMappingList($lotteryVendorMapping);
-          $this->mapping[$gameId] = new GameHandler($mappingList);
+            $lotteryVendorMapping = $this->gameVendorMappingRepo->getListByGameId($gameId);
+            $mappingList = $this->transformMappingList($lotteryVendorMapping);
+            $this->mapping[$gameId] = new GameHandler($mappingList);
         }
 
         return $this->mapping[$gameId]->getWinningNumber($lottery);
