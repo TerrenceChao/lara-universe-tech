@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\V1;
 
 use Illuminate\Http\Request;
-use App\Lottery\Games\Lottery;
+use App\Domain\Lottery\Games\Lottery;
 use App\Http\Controllers\Controller;
 use Psr\Container\ContainerInterface;
 
@@ -19,7 +19,7 @@ class LotteryController extends Controller
      */
     public function update(ContainerInterface $container)
     {
-        $target = $container->get('App\Lottery\GameService');
+        $target = $container->get('App\Domain\Lottery\GameService');
         return $target->getWinningNumber(new Lottery(['game_id' => 3, 'issue' => '20190903001']));
     }
 }

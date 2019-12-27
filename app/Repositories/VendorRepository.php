@@ -25,6 +25,7 @@ class VendorRepository
      */
     public function getList(): Collection
     {
+        echo 'VendorRepository -> getList' . PHP_EOL;
         return DB::table('vendors')->get();
     }
 }

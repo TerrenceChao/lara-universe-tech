@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Lottery\Vendors;
+namespace App\Domain\Lottery\Vendors;
 
-use App\Lottery\Games\Lottery;
+use App\Domain\Lottery\Games\Lottery;
 
 /**
  * Class SecondAPIVendor
- * @package App\Lottery\Vendors
+ * @package App\Domain\Lottery\Vendors
  */
 class SecondAPIVendor extends APIVendor
 {

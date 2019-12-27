@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Lottery\Games;
+namespace App\Domain\Lottery\Games;
 
 /**
  * Class GameHandler: 彩種
- * @package App\Lottery\Games
+ * @package App\Domain\Lottery\Games
  */
 class GameHandler
 {

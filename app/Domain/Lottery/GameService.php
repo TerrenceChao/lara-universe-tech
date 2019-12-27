@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Lottery;
+namespace App\Domain\Lottery;
 
-use App\Lottery\Games\Lottery;
-use App\Lottery\Games\GameHandler;
+use App\Domain\Lottery\Games\Lottery;
+use App\Domain\Lottery\Games\GameHandler;
 use App\Repositories\VendorRepository;
 use App\Repositories\GameVendorMappingRepository;
 use Illuminate\Support\Collection;
 
 /**
  * Class GameService: 需實現的 class.
- * @package App\Lottery
+ * @package App\Domain\Lottery
  */
 class GameService
 {
     /** @var string  */
-    private const VENDORS_PATH = 'App\\Lottery\\Vendors\\';
+    private const VENDORS_PATH = 'App\\Domain\\Lottery\\Vendors\\';
 
     /** @var Collection  號源列表 */
     private $vendorList;

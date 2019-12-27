@@ -1,13 +1,13 @@
 <?php
 
 
-namespace App\Lottery\Vendors;
+namespace App\Domain\Lottery\Vendors;
 
-use App\Lottery\Games\Lottery;
+use App\Domain\Lottery\Games\Lottery;
 
 /**
  * Class APIVendor: 第三方 API 廠商 (號源)
- * @package App\Lottery\Vendors
+ * @package App\Domain\Lottery\Vendors
  */
 abstract class APIVendor
 {

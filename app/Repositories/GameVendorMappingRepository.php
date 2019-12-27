@@ -26,6 +26,7 @@ class GameVendorMappingRepository
      */
     public function getListByGameId(int $gameId): Collection
     {
+        echo 'GameVendorMappingRepository -> getListByGameId' . PHP_EOL;
         return DB::table('game_vendor_mappings')
             ->where('game_id', '=', $gameId)
             ->get();
