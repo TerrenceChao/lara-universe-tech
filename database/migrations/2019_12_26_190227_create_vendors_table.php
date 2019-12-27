@@ -18,6 +18,8 @@ class CreateVendorsTable extends Migration
             $table->string('name', 40)->comment('號源名稱');
             $table->string('url', 100)->comment('號源網址');
             $table->timestamps();
+
+            $table->unique(['name']);
         });
     }
 
