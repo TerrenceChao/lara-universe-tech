@@ -17,7 +17,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('App\Domain\Lottery\GameService', function ($app) {
             $vendorRepo = $app->make('App\Repositories\VendorRepository');
             $gameVendorMappingRepo = $app->make('App\Repositories\GameVendorMappingRepository');
-            return GameService::instance($vendorRepo, $gameVendorMappingRepo);
+            return new GameService($vendorRepo, $gameVendorMappingRepo);
         });
     }
 

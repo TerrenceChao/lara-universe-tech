@@ -50,22 +50,7 @@ class GameService
     }
 
     /**
-     * 取得 GameService 實例
-     * @param VendorRepository $vendorRepo
-     * @param GameVendorMappingRepository $gameVendorMappingRepo
-     * @return GameService
-     */
-    public static function instance(VendorRepository $vendorRepo, GameVendorMappingRepository $gameVendorMappingRepo): GameService
-    {
-        if (empty(self::$instance)) {
-            self::$instance = new GameService($vendorRepo, $gameVendorMappingRepo);
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * 取得並轉換號源列表
+     * 取得並轉換 號源列表
      * @return array
      */
     private function transformVendorList(): array
@@ -80,13 +65,15 @@ class GameService
     }
 
     /**
-     * get the collection by the given key: vendor_id
-     * @param Collection $lotteryVendorMapping 彩種與號源之間的對映列表
+     * 取得並轉換 彩種與號源之間的對映列表
+     * @param int $gameId 彩種編號
      * @return array
      */
-    private function transformMappingList(Collection $lotteryVendorMapping): array
+    private function transformMappingList(int $gameId): array
     {
+        $lotteryVendorMapping = $this->gameVendorMappingRepo->getListByGameId($gameId);
         $vendorList = Memory::make('cache')->get('vendorList');
+
         return $lotteryVendorMapping->keyBy('vendor_id')
             ->map(function ($item) use ($vendorList) {
                 $vendorId = $item->vendor_id;
@@ -100,8 +87,8 @@ class GameService
     }
 
     /**
-     * 用來取得特定彩種的開獎號碼
-     * @param Lottery $lottery 指定彩種
+     * 取得特定彩種的開獎號碼
+     * @param Lottery $lottery 彩卷
      * @return string
      */
     public function getWinningNumber(Lottery $lottery): string
@@ -112,8 +99,7 @@ class GameService
 
         if (empty($gameHandler)) {
             echo '新增彩種為 ' . $gameId . ' 的實例' . PHP_EOL;
-            $lotteryVendorMapping = $this->gameVendorMappingRepo->getListByGameId($gameId);
-            $mappingList = $this->transformMappingList($lotteryVendorMapping);
+            $mappingList = $this->transformMappingList($gameId);
             $gameHandler = new GameHandler($mappingList);
             Memory::make('cache')->put($memKey, $gameHandler);
         }
