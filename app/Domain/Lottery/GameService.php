@@ -7,6 +7,8 @@ use App\Domain\Lottery\Games\GameHandler;
 use App\Repositories\VendorRepository;
 use App\Repositories\GameVendorMappingRepository;
 use Illuminate\Support\Collection;
+use Orchestra\Support\Facades\Memory;
+
 
 /**
  * Class GameService: 需實現的 class.
@@ -16,12 +18,6 @@ class GameService
 {
     /** @var string  */
     private const VENDORS_PATH = 'App\\Domain\\Lottery\\Vendors\\';
-
-    /** @var Collection  號源列表 */
-    private $vendorList;
-
-    /** @var Collection  GameHandler列表 */
-    private $mapping;
 
     /** @var GameService */
     private static $instance;
@@ -42,10 +38,19 @@ class GameService
         $this->vendorRepo = $vendorRepo;
         $this->gameVendorMappingRepo = $gameVendorMappingRepo;
 
-        // 載入所有的第三方 API 廠商 (號源)
-        $this->vendorList = $this->transformVendorList();
+        $memory = Memory::make('cache');
 
-        $this->mapping = collect();
+        // 載入所有的第三方 API 廠商 (號源)
+        if (!$memory->get('vendorList')) {
+            echo '載入所有的第三方 API 廠商 (號源)' . PHP_EOL;
+            $memory->put('vendorList', $this->transformVendorList());
+        }
+
+        if (!$memory->get('mapping')) {
+            echo '初始化 GameHandler 列表' . PHP_EOL;
+            $memory->put('mapping', []);
+        }
+
         echo 'GameService Constructed' . PHP_EOL;
     }
 
@@ -66,16 +71,17 @@ class GameService
 
     /**
      * 取得並轉換號源列表
-     * @return Collection
+     * @return array
      */
-    private function transformVendorList(): Collection
+    private function transformVendorList(): array
     {
         return $this->vendorRepo->getList()
             ->keyBy('id')
             ->map(function ($vendorInfo) {
                 $class = self::VENDORS_PATH. $vendorInfo->name;
                 return new $class((array) $vendorInfo);
-            });
+            })
+            ->all();
     }
 
     /**
@@ -85,13 +91,14 @@ class GameService
      */
     private function transformMappingList(Collection $lotteryVendorMapping): array
     {
+        $vendorList = Memory::make('cache')->get('vendorList');
         return $lotteryVendorMapping->keyBy('vendor_id')
-            ->map(function ($item) {
+            ->map(function ($item) use ($vendorList) {
                 $vendorId = $item->vendor_id;
                 return [
                     'game_id' => $item->game_id,
                     'major' => $item->major,
-                    'vendor' => $this->vendorList[$vendorId]
+                    'vendor' => $vendorList[$vendorId]
                 ];
             })
             ->all();
@@ -105,12 +112,17 @@ class GameService
     public function getWinningNumber(Lottery $lottery): string
     {
         $gameId = $lottery->getGameId();
-        if (empty($this->mapping[$gameId])) {
+        $memKey = 'game.handler.' . $gameId;
+        $gameHandler = Memory::make('cache')->get($memKey);
+
+        if (empty($gameHandler)) {
+            echo '取得彩種為 ' . $gameId . ' 的實例' . PHP_EOL;
             $lotteryVendorMapping = $this->gameVendorMappingRepo->getListByGameId($gameId);
             $mappingList = $this->transformMappingList($lotteryVendorMapping);
-            $this->mapping[$gameId] = new GameHandler($mappingList);
+            $gameHandler = new GameHandler($mappingList);
+            Memory::make('cache')->put($memKey, $gameHandler);
         }
 
-        return $this->mapping[$gameId]->getWinningNumber($lottery);
+        return $gameHandler->getWinningNumber($lottery);
     }
 }

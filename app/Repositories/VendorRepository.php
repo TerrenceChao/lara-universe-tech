@@ -25,7 +25,7 @@ class VendorRepository
      */
     public function getList(): Collection
     {
-        echo 'VendorRepository -> getList' . PHP_EOL;
+        echo 'VendorRepository -> getList (從資料庫拿)' . PHP_EOL . PHP_EOL;
         return DB::table('vendors')->get();
     }
 }

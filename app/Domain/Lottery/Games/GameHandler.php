@@ -46,8 +46,8 @@ class GameHandler
      */
     public function getWinningNumber(Lottery $lottery): string
     {
-        var_dump(['major' => $this->majorVendor]);
-        var_dump(['minor' => $this->minorVendorList]);
+//        var_dump(['major' => $this->majorVendor]);
+//        var_dump(['minor' => $this->minorVendorList]);
 
         try {
             $majorWinNum = $this->majorVendor->getWinningNumber($lottery);

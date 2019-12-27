@@ -165,6 +165,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Orchestra\Memory\MemoryServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -226,6 +227,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Memory' => Orchestra\Support\Facades\Memory::class,
     ],
 
 ];
