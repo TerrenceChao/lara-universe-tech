@@ -40,6 +40,9 @@ class FirstAPIVendor extends APIVendor
             5 => [
                 'gamekey' => 'bjsyxw_D',
             ],
+            6 => [
+                'gamekey' => 'bjsyxw_E',
+            ],
         ];
     }
 

@@ -16,12 +16,12 @@ class GamesTableSeeder extends Seeder
      */
     public function run()
     {
-        $count = 5;
+        $count = 6;
         $idx = 0;
         do {
             DB::table('games')->insert([
                 'name' => Str::random(10)
             ]);
-        } while(++$idx <= $count);
+        } while(++$idx < $count);
     }
 }

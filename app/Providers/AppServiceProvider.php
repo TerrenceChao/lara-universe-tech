@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Domain\Lottery\GameService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,11 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('App\Domain\Lottery\GameService', function ($app) {
-            $vendorRepo = $app->make('App\Repositories\VendorRepository');
-            $gameVendorMappingRepo = $app->make('App\Repositories\GameVendorMappingRepository');
-            return new GameService($vendorRepo, $gameVendorMappingRepo);
-        });
+        //
     }
 
     /**

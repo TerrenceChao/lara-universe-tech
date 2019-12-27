@@ -6,24 +6,16 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 /**
- * Class VendorRepository
+ * Trait VendorRepository
  * @package App\Repositories
  */
-class VendorRepository
+trait VendorRepository
 {
-    /**
-     * VendorRepository constructor.
-     */
-    public function __construct()
-    {
-        echo 'VendorRepository Constructed' . PHP_EOL;
-    }
-
     /**
      * 讀取號源列表
      * @return Collection
      */
-    public function getList(): Collection
+    public function getVendorList(): Collection
     {
         echo 'VendorRepository -> getList (從資料庫拿)' . PHP_EOL . PHP_EOL;
         return DB::table('vendors')->get();

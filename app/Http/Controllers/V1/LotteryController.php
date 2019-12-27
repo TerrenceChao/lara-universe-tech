@@ -5,7 +5,7 @@ namespace App\Http\Controllers\V1;
 use Illuminate\Http\Request;
 use App\Domain\Lottery\Games\Lottery;
 use App\Http\Controllers\Controller;
-use Psr\Container\ContainerInterface;
+use App\Domain\Lottery\GameService;
 
 /**
  * Class LotteryController
@@ -14,12 +14,18 @@ use Psr\Container\ContainerInterface;
 class LotteryController extends Controller
 {
     /**
-     * @param ContainerInterface $container
-     * @return mixed
+     * @param Request $request
+     * @return string
      */
-    public function update(ContainerInterface $container)
+    public function update(Request $request)
     {
-        $target = $container->get('App\Domain\Lottery\GameService');
-        return $target->getWinningNumber(new Lottery(['game_id' => 3, 'issue' => '20190903001']));
+        // TODO: 需做參數檢查，在此省略...
+        $params = [
+            'game_id' => intval($request->query('game_id')),
+            'issue' => $request->query('issue'),
+        ];
+
+        $target = GameService::instance();
+        return $target->getWinningNumber(new Lottery($params));
     }
 }
