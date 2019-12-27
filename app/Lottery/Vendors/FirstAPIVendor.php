@@ -30,7 +30,16 @@ class FirstAPIVendor extends APIVendor
             // 北京11選5
             2 => [
                 'gamekey' => 'bjsyxw',
-            ]
+            ],
+            3 => [
+                'gamekey' => 'bjsyxw_B',
+            ],
+            4 => [
+                'gamekey' => 'bjsyxw_C',
+            ],
+            5 => [
+                'gamekey' => 'bjsyxw_D',
+            ],
         ];
     }
 

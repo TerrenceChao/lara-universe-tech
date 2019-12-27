@@ -31,6 +31,15 @@ class SecondAPIVendor extends APIVendor
             2 => [
                 'code' => 'bj11x5',
             ],
+            3 => [
+                'code' => 'bj11x5_B',
+            ],
+            4 => [
+                'code' => 'bj11x5_C',
+            ],
+            5 => [
+                'code' => 'bj11x5_D',
+            ],
         ];
     }
 

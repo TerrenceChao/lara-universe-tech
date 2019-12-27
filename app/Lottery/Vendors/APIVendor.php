@@ -24,7 +24,7 @@ abstract class APIVendor
      */
     public function __construct(array $data)
     {
-        $this->vendorId = $data['vendor_id'];
+        $this->vendorId = $data['id'];
         $this->name = $data['name'];
         $this->url = $data['url'];
     }

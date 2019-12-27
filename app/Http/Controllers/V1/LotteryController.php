@@ -20,6 +20,6 @@ class LotteryController extends Controller
     public function update(ContainerInterface $container)
     {
         $target = $container->get('App\Lottery\GameService');
-        return $target->getWinningNumber(new Lottery(['game_id' => 2, 'issue' => '20190903001']));
+        return $target->getWinningNumber(new Lottery(['game_id' => 3, 'issue' => '20190903001']));
     }
 }

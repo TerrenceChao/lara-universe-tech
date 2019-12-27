@@ -71,10 +71,10 @@ class GameService
     private function transformVendorList(): Collection
     {
         return $this->vendorRepo->getList()
-            ->keyBy('vendor_id')
+            ->keyBy('id')
             ->map(function ($vendorInfo) {
-                $class = self::VENDORS_PATH. $vendorInfo['name'];
-                return new $class($vendorInfo);
+                $class = self::VENDORS_PATH. $vendorInfo->name;
+                return new $class((array) $vendorInfo);
             });
     }
 
@@ -87,10 +87,10 @@ class GameService
     {
         return $lotteryVendorMapping->keyBy('vendor_id')
             ->map(function ($item) {
-                $vendorId = $item['vendor_id'];
+                $vendorId = $item->vendor_id;
                 return [
-                    'game_id' => $item['game_id'],
-                    'major' => $item['major'],
+                    'game_id' => $item->game_id,
+                    'major' => $item->major,
                     'vendor' => $this->vendorList[$vendorId]
                 ];
             })

@@ -2,7 +2,8 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Class VendorRepository
@@ -24,22 +25,6 @@ class VendorRepository
      */
     public function getList(): Collection
     {
-        return new Collection([
-            [
-                'vendor_id' => 18,
-                'name' => 'FirstAPIVendor',
-                'url' => 'http://one.faker/v1'
-            ],
-            [
-                'vendor_id' => 22,
-                'name' => 'SecondAPIVendor',
-                'url' => 'https://two.fake/newly.do'
-            ],
-            [
-                'vendor_id' => 66,
-                'name' => 'ThirdAPIVendor',
-                'url' => 'https://three.fake/just.bet'
-            ]
-        ]);
+        return DB::table('vendors')->get();
     }
 }
