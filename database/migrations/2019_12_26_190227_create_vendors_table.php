@@ -14,7 +14,7 @@ class CreateVendorsTable extends Migration
     public function up()
     {
         Schema::create('vendors', function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('號源編號');
+            $table->bigIncrements('id');
             $table->string('name', 40)->comment('號源名稱');
             $table->string('url', 100)->comment('號源網址');
             $table->timestamps();
