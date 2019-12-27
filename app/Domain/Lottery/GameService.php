@@ -46,11 +46,6 @@ class GameService
             $memory->put('vendorList', $this->transformVendorList());
         }
 
-        if (!$memory->get('mapping')) {
-            echo '初始化 GameHandler 列表' . PHP_EOL;
-            $memory->put('mapping', []);
-        }
-
         echo 'GameService Constructed' . PHP_EOL;
     }
 
@@ -116,7 +111,7 @@ class GameService
         $gameHandler = Memory::make('cache')->get($memKey);
 
         if (empty($gameHandler)) {
-            echo '取得彩種為 ' . $gameId . ' 的實例' . PHP_EOL;
+            echo '新增彩種為 ' . $gameId . ' 的實例' . PHP_EOL;
             $lotteryVendorMapping = $this->gameVendorMappingRepo->getListByGameId($gameId);
             $mappingList = $this->transformMappingList($lotteryVendorMapping);
             $gameHandler = new GameHandler($mappingList);
